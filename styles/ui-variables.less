@@ -1,52 +1,58 @@
 /*
-Include the standard variables from Mailspring's base theme:
-https://github.com/Foundry376/Mailspring/blob/master/app/static/base/ui-variables.less#L37:L40
+Import our own variable file that inherits from Mailspring's base
+styles and overrides colors, margins, etc. to create our theme's
+overall design.
+
+Since most of the app uses these variables to style individual elements,
+we don't have to do much to create a totally different look.
+
+Note: This file needs to be named ui-variables.less so other
+stylesheets can call `@import "ui-variables";` and reference it.
 */
-@import "base/ui-variables";
+@import "ui-variables";
 
-@gray-base: #ffffff;
-@gray-darker: darken(@gray-base, 13.5%);
-@gray-dark: darken(@gray-base, 20%);
-@gray: darken(@gray-base, 33.5%);
-@gray-light: darken(@gray-base, 46.7%);
-@gray-lighter: darken(@gray-base, 92.5%);
-@white: #0a0a0a;
+/*
+After changing variables to set a base for our theme, we can use
+specific, narrowly-scoped CSS rules to change other things.
 
-@accent-primary: #58b660;
-@accent-primary-dark: darken(@accent-primary, 10%);
+Tip: You can use the Developer Tools in Mailspring and "Inspect
+Element" to identify the DOM elements and styles you want to override.
 
-@background-primary: #212121;
-@background-off-primary: #212121;
-@background-secondary: #121212;
-@background-tertiary: #6d7987;
+Tip: You only need to target the latest version of Chrome (eg Electron)
+here, so you can use modern CSS like -webkit-filter and -webkit-mask-image
+(which is used to make most of the icons in the app styleable via a
+background color.)
+*/
+.sheet-toolbar {
+  border-bottom: 1px solid @border-color-divider;
+  box-shadow: none;
+}
 
-@border-color-primary: lighten(@background-primary, 10%);
-@border-color-secondary: lighten(@background-secondary, 10%);
-@border-color-tertiary: lighten(@background-tertiary, 10%);
-@border-color-divider: @border-color-secondary;
+.list-container .list-item.focused {
+    background: @text-color-very-subtle !important;
+    color: @white !important;
+    border-bottom: 1px solid @text-color-very-subtle !important;
+}
 
-@text-color: #eee;
-@text-color-subtle: fadeout(@text-color, 20%);
-@text-color-very-subtle: fadeout(@text-color, 40%);
-@text-color-inverse: white;
-@text-color-inverse-subtle: fadeout(@text-color-inverse, 20%);
-@text-color-inverse-very-subtle: fadeout(@text-color-inverse, 50%);
-@text-color-heading: #fff;
+.thread-icon:not(.thread-icon-unread):not(.thread-icon-star) {
+  -webkit-filter: invert(100%);
+}
+img.content-dark {
+  -webkit-filter: invert(100%);
+}
+img.content-light {
+  -webkit-filter: invert(100%);
+}
 
-@text-color-link: @accent-primary;
-@text-color-link-hover: @accent-primary-dark;
-@text-color-link-active: @accent-primary-dark;
+.mail-label {
+  -webkit-filter: contrast(110%) brightness(85%);
+}
 
-@btn-default-bg-color: lighten(@background-primary, 5%);
-@dropdown-default-bg-color: #404040;
+#message-list .message-item-wrap .message-item-white-wrap {
+  box-shadow: 0 0 0.5px rgba(255, 255, 255, 0.28),
+    0 1px 1.5px rgba(255, 255, 255, 0.08);
+}
 
-@input-bg: #2e2e2e;
-@input-border: @border-color-divider;
-
-@list-bg: #333;
-@list-border: #383838;
-@list-selected-color: @text-color-inverse;
-@list-focused-color: @text-color;
-
-@toolbar-background-color: #121212;
-@panel-background-color: #121212;
+.thread-list .list-item:not(.unread):not(.selected):not(.focused) {
+  color: #aaa;
+}
